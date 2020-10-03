@@ -1,0 +1,38 @@
+#!/bin/bash -e
+#
+# S2I assemble script for the 'elixir-live' image.
+# The 'assemble' script builds your application source so that it is ready to run.
+#
+# For more information refer to the documentation:
+# https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md
+#
+
+# If the 'elixir-live' assemble script is executed with the '-h' flag, print the usage.
+if [[ "$1" == "-h" ]]; then
+  exec /usr/libexec/s2i/usage
+fi
+
+echo "---> Installing application source..."
+cp -Rf /tmp/src/. ./
+
+echo "---> Building Elixir application from source..."
+mix do local.hex --force, local.rebar --force, deps.get, deps.compile, compile
+
+if [ -f assets/package.json ]; then
+  cd assets
+
+  echo "---> Installing node dependencies..."
+  npm install -d --no-progress
+
+  echo "---> Building assets..."
+  npm run deploy
+
+  cd -
+fi
+
+echo "---> Fixing permissions..."
+chgrp -R 0 /opt/app-root
+chmod -R g+rw /opt/app-root
+find /opt/app-root -type d -exec chmod g+x {} +
+
+echo "---> Build complete"

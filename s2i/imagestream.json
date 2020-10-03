@@ -1,0 +1,30 @@
+{
+  "kind": "ImageStreamList",
+  "apiVersion": "v1",
+  "metadata": {
+  },
+  "items": [
+    {
+      "kind": "ImageStream",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "s2i-elixir",
+        "creationTimestamp": null
+      },
+      "spec": {
+        "tags": [
+          {
+            "name": "1.10",
+            "annotations": {
+              "description": "Build and run Elixir (1.10) and Phoenix applications on OpenShift",
+              "iconClass": "icon-elixir",
+              "tags": "builder,elixir,elixir-1.10,phoenix",
+              "supports": "elixir:1.10,elixir",
+              "sampleRepo": "https://github.com/donkeybanana/s2i-elixir.git"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+Makefile
+s2i/
+.s2iignore
+.git*

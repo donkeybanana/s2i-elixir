@@ -1,0 +1,12 @@
+#!/bin/bash -e
+cat <<EOF
+This is the elixir-live S2I image.
+
+To use it, install S2I (https://github.com/openshift/source-to-image) and run:
+
+    s2i build <source path/ git URL> elixir-live <destination image>
+
+You can then run the resulting image via:
+
+    docker run <destination image>
+EOF
