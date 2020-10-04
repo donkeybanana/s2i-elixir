@@ -21,6 +21,10 @@
               "tags": "builder,elixir,elixir-1.10,phoenix",
               "supports": "elixir:1.10,elixir",
               "sampleRepo": "https://github.com/donkeybanana/s2i-elixir.git"
+            },
+            "from": {
+              "kind": "DockerImage",
+              "name": "quay.io/donkeybanana/s2i-elixir:1.10"
             }
           }
         ]
