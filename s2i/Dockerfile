@@ -8,6 +8,8 @@ LABEL io.k8s.description="Elixir 1.10 s2i Builder Image" \
       io.openshift.tags="elixir,1.10,builder,s2i" \
       io.openshift.s2i.scripts-url="image:///usr/libexec/s2i"
 
+ENV MIX_ENV=prod
+
 RUN apt-get update \
 &&  apt-get install -y \
       curl \

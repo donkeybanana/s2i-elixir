@@ -16,19 +16,25 @@ echo "---> Installing application source..."
 cp -Rf /tmp/src/. ./
 
 echo "---> Building Elixir application from source..."
-mix do local.hex --force, local.rebar --force, deps.get, deps.compile, compile
+mix do local.hex --force, \
+  local.rebar --force, \
+  deps.get --only prod, \
+  deps.compile
 
 if [ -f assets/package.json ]; then
-  cd assets
-
   echo "---> Installing node dependencies..."
-  npm install -d --no-progress
+  npm --prefix ./assets --no-progress ci
 
   echo "---> Building assets..."
-  npm run deploy
-
-  cd -
+  npm --prefix ./assets run deploy
+  mix phx.digest
 fi
+
+echo "---> Building release..."
+mix do compile, release
+
+echo "---> Linking release..."
+ln -sf "$PWD/$(ls _build/prod/rel/*/bin/* | head -n1)" /opt/app-root/run
 
 echo "---> Fixing permissions..."
 chgrp -R 0 /opt/app-root

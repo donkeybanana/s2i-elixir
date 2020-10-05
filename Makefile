@@ -8,7 +8,8 @@ NAMESPACE=elixir
 .PHONY: build
 build:
 	@make -C s2i
-	s2i build . $(BASE_IMAGE) $(NAMESPACE)/$(IMAGE_NAME):$(VERSION)
+	s2i build -c . $(BASE_IMAGE) $(NAMESPACE)/$(IMAGE_NAME):latest
+	docker tag $(NAMESPACE)/$(IMAGE_NAME):latest $(NAMESPACE)/$(IMAGE_NAME):$(VERSION)
 
 .PHONY: publish
 publish: build
