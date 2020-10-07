@@ -38,7 +38,7 @@ ln -sf "$PWD/$(ls _build/prod/rel/*/bin/* | head -n1)" /opt/app-root/run
 
 echo "---> Fixing permissions..."
 chgrp -R 0 /opt/app-root
-chmod -R g+rw /opt/app-root
+chmod -R g+rwx /opt/app-root
 find /opt/app-root -type d -exec chmod g+x {} +
 
 echo "---> Build complete"
