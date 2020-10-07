@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/sh -e
 #
 # S2I assemble script for the 'elixir-live' image.
 # The 'assemble' script builds your application source so that it is ready to run.
@@ -9,7 +9,7 @@
 
 # If the 'elixir-live' assemble script is executed with the '-h' flag, print the usage.
 if [[ "$1" == "-h" ]]; then
-  exec /usr/libexec/s2i/usage
+  exec $STI_SCRIPTS_PATH/usage
 fi
 
 echo "---> Installing application source..."

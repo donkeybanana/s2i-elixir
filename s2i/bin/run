@@ -1,3 +1,3 @@
-#!/bin/bash -e
+#!/bin/sh -e
 
 exec /opt/app-root/run start

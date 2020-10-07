@@ -1,4 +1,4 @@
-FROM elixir:1.10-slim
+FROM elixir:1.10-alpine
 
 LABEL maintainer="Alan Burgoyne <alan@srcur.com>"
 
@@ -10,18 +10,22 @@ LABEL io.k8s.description="Elixir 1.10 s2i Builder Image" \
 
 ENV MIX_ENV=prod
 
-RUN apt-get update \
-&&  apt-get install -y \
+RUN apk update \
+&&  apk --no-cache --update add \
+      make \
+      g++ \
+      wget \
       curl \
-      software-properties-common \
-&&  curl -sL https://deb.nodesource.com/setup_12.x | bash - \
-&&  apt-get install -y \
+      inotify-tools \
       nodejs \
-&&  rm -rf /var/lib/apt/lists/*
+      nodejs-npm \
+&&  npm install npm -g --no-progress \
+&&  update-ca-certificates --fresh \
+&&  rm -rf /var/cache/apk/*
 
 COPY ./bin/ /usr/libexec/s2i
 
-RUN useradd -u 1001 -g 0 -m -d /opt/app-root default \
+RUN adduser --uid 1001 -G root --system --home /opt/app-root default \
 &&  mkdir -p /opt/app-root/src \
 &&  chown -R 1001:1001 /opt/app-root
 

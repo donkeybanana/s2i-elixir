@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/sh -e
 cat <<EOF
 This is the elixir-live S2I image.
 
